@@ -1,0 +1,8 @@
+<div class="dialog-box">
+    <form>
+      <label>Fence Distance From Propertyline (Feet):</label><br>
+      <input min="0" name="fenceOffset" type="number" [(ngModel)]="fenceValue" required>
+      <button type="submit" (click)="addFence()" >Add Fence</button>
+      <button (click)="hideFenceDialog();" >Cancel</button>
+    </form>
+  </div>

@@ -1,0 +1,24 @@
+.button_tab{
+  background-color: #fbb814!important;
+  border: none;
+  border-radius: 2px;
+  min-height: 26px;
+  margin-right: 10px;
+  min-width: 60px;
+  font-weight: 600;
+  float: right;
+}
+.home-icon{
+  position: absolute;
+  bottom: 50px;
+  right: 72px;
+  cursor: pointer;
+}
+.accordian_opened{
+  bottom: 175px !important;
+  right: 30px !important;
+}
+.accordian_closed{
+  bottom: 80px !important;
+  right: 30px !important;
+}

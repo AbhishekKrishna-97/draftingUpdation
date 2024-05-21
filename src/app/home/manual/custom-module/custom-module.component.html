@@ -1,0 +1,61 @@
+<div class="heading">
+  <h3>Add Module</h3>
+</div>
+<div class="container" [formGroup]="addModuleForm">
+  
+  <div class="row module-type">
+    <div class="col-lg-4 col-md-4">
+        <mat-form-field class="example-full-width">
+            <mat-label>Module Height</mat-label>
+            <input matInput placeholder="Module Height(in inches)" formControlName="moduleHeight">
+        </mat-form-field>
+    </div>
+    <div class="col-lg-4 col-md-4">
+        <mat-form-field class="example-full-width">
+            <mat-label>Module Width</mat-label>
+            <input matInput placeholder="Module Width(in inches)" formControlName="moduleWidth">
+        </mat-form-field>
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <mat-form-field class="example-full-width">
+          <mat-label>Distance B/w Module</mat-label>
+          <input matInput placeholder="Distance B/w Module(in inches)" formControlName="distanceBwModule">
+      </mat-form-field>
+  </div>
+</div>
+  <div class="row module-type">
+    <mat-label>Module Type</mat-label>
+    <mat-radio-group aria-label="Select an option" formControlName="type" (change)="typeChange($event)">
+      <mat-radio-button value="automatic">Automatic</mat-radio-button>
+      <mat-radio-button value="manual">Manual</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="row module-type" *ngIf="addModuleForm.get('type').value === 'automatic'">
+    <mat-label>Automatic Orientation Type</mat-label>
+    <mat-radio-group aria-label="Select an option" formControlName="orientationType">
+      <mat-radio-button value="1">PORTRAIT</mat-radio-button>
+      <mat-radio-button value="2">LANDSCAPE</mat-radio-button>
+      <mat-radio-button value="3">MIXED</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="row module-type" *ngIf="addModuleForm.get('type').value === 'manual'">
+    <mat-label>Manual Orientation Type</mat-label>
+    <mat-radio-group aria-label="Select an option" formControlName="orientationType">
+        <mat-radio-button value="1">PORTRAIT</mat-radio-button>
+        <mat-radio-button value="2">LANDSCAPE</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="row btn-wrapper">
+    <div class="col-md-12">
+      <button mat-raised-button (click)="closeDialog()">Cancel</button>
+      <button
+        mat-raised-button
+        [disabled]="addModuleForm.invalid"
+        (click)="submitForm()"
+        color="primary"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

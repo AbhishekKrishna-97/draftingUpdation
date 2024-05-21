@@ -1,0 +1,84 @@
+
+<div [ngClass]="{'roof-parent': viewType === 'Roof Plan', 'roof-string-layout': viewType === 'String Layout'}"  class="parent draggable">
+  <div (click)="actionToggle($event, 'hand')" class="div1" [ngClass]="{'active-tool': activeTool == 'hand'}">
+    <div>
+      <img matTooltip="Hand"  style="width: 1rem !important;" src="../../assets/Icon/hand.svg"  class="img-x">
+    </div>
+  </div>
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'property-line')" class="div2" [ngClass]="{'active-tool': activeTool == 'property-line'}">
+    <img matTooltip="Property Line"  style="width: 1rem !important;" src="../../../assets/Icon/new_logo/Arrow.svg" />
+  </div>
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'tree')" class="div3" [ngClass]="{'active-tool': activeTool == 'tree'}">
+    <img style="margin:5px" matTooltip="Tree" src="../../assets/Icon/treeIcon.svg" />
+  </div>
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" class="div4" [ngClass]="{'active-tool': activeTool == 'roof' || activeTool == 'rectangle' || activeTool == 'circle' || activeTool == 'polyline'}">
+    <button  class="button_drawingTool" mat-button [matMenuTriggerFor]="menu">
+      <img  matTooltip="Tools" style="width: 1.2rem !important;" src="../../../assets/Icon/new_logo/Shapes.svg" />
+    </button>
+    <mat-menu #menu="matMenu">
+      <button *ngIf="showRoofTool && viewType != 'Roof Plan'" [ngClass]="{'active-tool': activeTool == 'roof'}"  (click)="actionToggle($event, 'roof');closeMenu()"  class="button_drawingTool" mat-menu-item>
+        <img style="margin:5px; width: 1.2rem !important;"   src="../../../assets/Icon/new_logo/Rectangle.svg" />
+        <span> Roof</span>
+       </button>
+       <button *ngIf="viewType != 'Roof Plan'" [ngClass]="{'active-tool': activeTool == 'rectangle'}"  (click)="actionToggle($event, 'rectangle');closeMenu()"  class="button_drawingTool" mat-menu-item>
+        <img style="margin:5px; width: 1.2rem !important;"   src="../../../assets/Icon/new_logo/Rectangle.svg" />
+        <span> Rectangle</span>
+       </button>
+     <button *ngIf="viewType != 'Roof Plan'" [ngClass]="{'active-tool': activeTool == 'circle'}" (click)="actionToggle($event, 'circle'); closeMenu()"  class="button_drawingTool" mat-menu-item>
+      <i  class="fa-regular fa-circle text-[16px] m-[6px]"  ></i>
+      <span> Circle</span>
+    </button>
+    <button *ngIf="viewType != 'Roof Plan'" [ngClass]="{'active-tool': activeTool == 'polyline'}" (click)="actionToggle($event, 'polyline');closeMenu()"  class="button_drawingTool" mat-menu-item>
+      <img style="margin:5px"   src="../../assets/Icon/polyline.png"  class="img-x"/>
+      <span> Polyline</span>
+    </button>
+    </mat-menu>
+  </div>
+
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'driveway')" class="div6" [ngClass]="{'active-tool': activeTool == 'driveway'}">
+    <img matTooltip="Driveway" style="width: 0.7rem;" src="../../assets/Icon/Road.png" />
+  </div>
+
+  <div (click)="actionToggle($event, 'text')" class="div8" [ngClass]="{'active-tool': activeTool == 'text'}">
+    <img  matTooltip="Text"  style="width: 1rem !important; margin:5px" src="../../../assets/Icon/new_logo/text.svg" />
+  </div>
+  <!-- <div  (click)="actionToggle($event, 'handundo')"  class="div9" [ngClass]="{'active-tool': activeTool == 'handundo'}">
+    <img  matTooltip="Undo" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/new_logo/Undo.svg" />
+  </div>
+  <div  (click)="actionToggle($event, 'handleredo')"  class="div10" [ngClass]="{'active-tool': activeTool == 'handleredo'}">
+    <img  matTooltip="Redo" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/new_logo/Redo.svg" />
+  </div> -->
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'adjustmap')"  class="div11" [ngClass]="{'active-tool': activeTool == 'adjustmap'}">
+    <!-- <i class="fa-solid fa-rotate" matTooltip="Rotate"  style="color: #2b2f32; margin:6px !important"></i> -->
+    <img  matTooltip="Rotate" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/new_logo/360.svg" />
+  </div>
+  <div *ngIf="viewType != 'String Layout'" (click)="actionToggle($event, 'equipments')"   class="div12" [ngClass]="{'active-tool': activeTool == 'equipments'}">
+    <img [matMenuTriggerFor]="equipmentMenu" matTooltip="Equipments" style="width: 1.6rem !important;" src="../../assets/Icon/equipment.png" />
+    <mat-menu #equipmentMenu="matMenu">
+      <button  *ngFor="let equipment of sections"  (click)="addEquipment(equipment.title)" [ngClass]="{'active-tool': activeTool == 'rectangle'}" class="button_drawingTool button_drawingTool_equipments" mat-menu-item>
+       <span> {{equipment.title}}</span>
+      </button>
+   </mat-menu>
+  </div>
+  <!-- <div *ngIf="currentUrl == '/dxfdrawing' && viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'panel')" [ngClass]="{'active-tool': activeTool == 'panel'}">
+    <img  matTooltip="Add Panel" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/solar-panels.png" />
+  </div> -->
+  <div class="div6 flex justify-center items-center px-3" *ngIf="viewType == 'Roof Plan' || viewType == 'String Layout'" [ngClass]="{'active-tool': activeTool == 'connectionWire'}" (click)="actionToggle($event, 'connectionWire');" >
+    <img matTooltip="Polyline" style="width: 1rem !important;" src="../../assets/Icon/polyline.png"  class="img-x">
+  </div>
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'pool')" [ngClass]="{'active-tool': activeTool == 'pool'}">
+    <img  matTooltip="Pool" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/pool.png" />
+  </div>
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'chimney')" [ngClass]="{'active-tool': activeTool == 'chimney'}">
+    <img  matTooltip="Chimney" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/chimney.png" />
+  </div>
+  <div *ngIf="viewType != 'Roof Plan' && viewType != 'String Layout'" (click)="actionToggle($event, 'fence')" [ngClass]="{'active-tool': activeTool == 'fence'}">
+    <img  matTooltip="Fence" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/fence.png" />
+  </div>
+  <div *ngIf="viewType == 'Roof Plan'" (click)="actionToggle($event, 'roofSlope')" [ngClass]="{'active-tool': activeTool == 'roofSlope'}" class="flex justify-center items-center">
+    <img  matTooltip="Roof Slope" style="width: 1rem !important; margin:5px" src="../../../assets/Icon/slope.png" />
+  </div>
+</div>
+
+<app-add-fence *ngIf="activeInfoWindow == 'addfence'" (fenceOffset)="addFence($event)" (hideFenceModal)="hideFenceModal($event);" ></app-add-fence>
+

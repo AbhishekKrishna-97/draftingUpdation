@@ -1,0 +1,51 @@
+.button_tab{
+ background-color: #fbb814!important;
+ border: none;
+ border-radius: 2px;
+ max-height: 30px;
+ max-height: 30px;
+ margin-right: 10px;
+ min-width: 60px;
+ font-weight: 600;
+ float: right;
+ line-height: 30px !important;
+//  margin-top: 8px !important;
+}
+.dxf-next-btn{
+  background-color: #fbb814 !important;
+  border: none;
+  border-radius: 2px;
+  min-height: 26px;
+  margin-right: 10px;
+  min-width: 60px;
+  font-weight: 600;
+  position: absolute;
+  right: 60px;
+  bottom: 25px;
+}
+.inputs-dxf {
+  left: 13px;
+  border-radius: 7px;
+  padding: 15px;
+  position: fixed;
+  bottom: 26px;
+  background-color: #fff;
+}
+.rotate-scale-inputs {
+  /* Adjust as needed */
+  display: flex;
+}
+.home-icon{
+  position: absolute;
+  bottom: 32px;
+  right: 72px;
+  cursor: pointer;
+}
+.accordian_opened{
+  bottom: 160px !important;
+  right: 30px !important;
+}
+.accordian_closed{
+  bottom: 80px !important;
+  right: 30px !important;
+}

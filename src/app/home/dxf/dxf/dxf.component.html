@@ -1,0 +1,67 @@
+<div *ngIf="showTabs" class="container-fluid fluid-padding pb-[10px] p-0"
+  style="position: absolute; background-color: rgb(227, 227, 227) !important;">
+  <div class="h-[30px] grid grid-cols-12">
+    <div class="col-span-7">
+      <div class="d-flex flex-row  justify-end" style="overflow-x: auto;">
+        <ng-container *ngFor="let tab of tablist; let i = index">
+          <div
+            [ngClass]="selectedtabindex == i? 'p-1 pt-[2px] pr-3 pb-0 pl-3 bg-black text-white  cursor-pointer  border-solid border-[0.5px] border-stone-400  h-[30px]' :
+            'cursor-pointer bg-[#ffff] p-1 pt-[2px] pr-3 pb-0 pl-3 border-solid border-[0.5px] border-stone-400  h-[30px]'">
+            <div class="col-span-12 mx-2 my-1 text-xs" style="margin-top:2px !important">
+              <p style="white-space:nowrap">{{tab.name}}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-span-5">
+      <button mat-button class="button_tab" (click)="preserveDraftingData()">Save</button>
+      <button mat-button (click)="onTabChange('next')" *ngIf="selectedtabindex !=2" class="button_tab">Next</button>
+      <button mat-button (click)="onTabChange('prev')" class="button_tab">Prev</button>
+      <button mat-button (click)="getDrfating('true')" *ngIf="selectedtabindex ==2" class="button_tab">Submit</button>
+      <button mat-button (click)="getDrfating()" *ngIf="selectedtabindex ==2" class="button_tab">Preview</button>
+    </div>
+  </div>
+</div>
+<div [ngClass]="hideMap? 'hidden':'block'" class="animated-div" id="mapDxf"
+  style="height:100%; width: 100%; position: absolute !important; z-index: -2;">
+</div>
+<button *ngIf="nextBtnDxf" mat-button class="button_tab dxf-next-btn" (click)="submitDxfData()">Next</button>
+
+<!-- Code to move to bottom-right corner -->
+<div class="inputs-dxf bottom-right"
+  [hidden]="!ismapready ||  isdxfBoundaries || isSitePlan || isRoofPlan || isStringLayout">
+  <div class="rotate-scale-inputs">
+    <label>Rotate</label>
+    <div>
+      <i class="fa-solid fa-rotate-left" style="margin-left: 47px;" (click)="rotatePolygons(-1)"></i>
+      <i class="fa-solid fa-rotate-right" style="margin-left: 15px;" (click)="rotatePolygons(1)"></i>
+    </div>
+    <!-- <input type="range" id="rotationSlider" step="1" min="-45" max="45" value="0" > -->
+  </div>
+  <hr />
+  <div class="rotate-scale-inputs">
+    <label>Scale</label>
+    <div>
+      <i class="fa-solid fa-plus" style="margin-left: 54px;" (click)="scaleUp()"></i>
+      <i class="fa-solid fa-minus" style="margin-left: 15px;" (click)="scaledown()"></i>
+    </div>
+    <!-- <input type="range" id="sizeSlider" step="any" min="0.1" max="2" value="1.0" style="margin-left: 10px;"> -->
+  </div>
+
+</div>
+
+<!-- Code for Mark * -->
+<div class="bg-white h-[46px] w-[177px] absolute top-[70px] p-[6px] flex" *ngIf="!isloading && !isSitePlan && !isRoofPlan && !isStringLayout && !showFileUpload">
+    <span>*</span>
+    <p class="text-[12px] ml-1 font-semibold"> Please Mark The Boundary of House</p>
+</div>
+
+<app-file-upload-panel *ngIf="showFileUpload" (onSubmit)="handleSubmit($event)"></app-file-upload-panel>
+<app-loder [isLoading]="isloading"></app-loder>
+<app-dxf-site-plan (mapInstance) = "fetchCurrentMap($event);" *ngIf="isSitePlan"></app-dxf-site-plan>
+<app-dxf-roof-plan (mapInstance) = "fetchCurrentMap($event);" *ngIf="isRoofPlan"></app-dxf-roof-plan>
+<app-dxf-string-layout (mapInstance) = "fetchCurrentMap($event);" (StringLayoutAccordian)="accordianStatus($event)" *ngIf="isStringLayout"></app-dxf-string-layout>
+<div *ngIf="isSitePlan || isRoofPlan || isStringLayout" class="home-icon" [ngClass]="{'accordian_opened' : isStringLayout && stringLayoutAccordian , accordian_closed : isStringLayout && !stringLayoutAccordian}">
+<img style="width:28px;" src="../../../../../assets/Icon/home.png" (click)="setMapCenter();">
+</div>

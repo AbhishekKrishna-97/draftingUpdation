@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 11px 15px -7px #0003, 0 24px 38px 3px #00000024, 0 9px 46px 8px #0000001f;
+    width: 800px;
+    height: max-content;
+    background-color: #FFFFFF;
+    padding: 40px 40px 40px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.drop_box {
+    margin: 20px 0;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 3px dashed #717386;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.drop_box h4 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #2E2E2E;
+}
+
+.drop_box p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #A3A3A3;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #FBB814;
+    color: #FFFFFF;
+    padding: 15px 30px;
+    border: none;
+    outline: none;
+    transition: 0.3s;
+    border-radius: 4px;
+    min-height: 26px;
+    margin-right: 10px;
+    min-width: 60px;
+    font-weight: 600;
+    color: #212529;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    text-decoration: none;
+    background-color: #FBB814;
+    padding: 15px 30px;
+    border: none;
+}
+
+.form input {
+    margin: 10px 0;
+    width: 100%;
+    background-color: #E2E2E2;
+    border: none;
+    outline: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+}
+
+.button_group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.button_group .btn_save:hover {
+    background: #E1AD01;
+}
+.btn-remove {
+    background-color: #FBB814;
+    color: #212529;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.file-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    background: linear-gradient(to top, #ededed, #efefef, #f1f1f1, #f4f4f4, #f6f6f6);
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+}
+.btn-remove:hover {
+    background: #E1AD01;
+}

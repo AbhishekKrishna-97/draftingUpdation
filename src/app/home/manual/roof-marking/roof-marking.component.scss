@@ -1,0 +1,195 @@
+.dxf-next-btn {
+  background-color: #fbb814 !important;
+  border: none;
+  border-radius: 2px;
+  min-height: 26px;
+  margin-right: 10px;
+  min-width: 60px;
+  font-weight: 600;
+  position: absolute;
+  right: 5px;
+  // bottom: 25px;
+}
+
+.main-div {
+  .dxf-next-btn, .parent {
+    top: 5px !important;
+  }
+}
+
+.main-div {
+  .marking-eave h1 {
+    left: 50px !important;
+  }
+}
+
+.map-div {
+  top: 50px !important;
+}
+
+.t-class {
+  height: 96vh;
+}
+
+.button {
+  background-color: #fbb814 !important;
+  border: none;
+  border-radius: 2px;
+  min-height: 26px;
+  margin-right: 10px;
+  min-width: 60px;
+  font-weight: 600;
+  float: right;
+}
+
+.animated-div {
+  transition: all 1s ease;
+}
+
+#map div[style*='crosshair'] {
+  cursor: url("https://i.stack.imgur.com/mA4e2.jpg?s=48&g=1")24 24, crosshair !important;
+}
+
+.draggable {
+  background-color: #fff !important;
+  position: absolute !important;
+  cursor: grab;
+}
+
+.border-right {
+  border-right: 1px solid #E0E0E0;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.parent {
+  height: 29.5px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: 1fr;
+  align-items: start;
+  justify-content: center;
+  width: auto;
+  position: absolute !important;
+  display: flex;
+  left: 5px;
+}
+
+.div1 {
+  flex-direction: column;
+  row-gap: .1rem;
+  justify-content: center;
+  align-items: center;
+  // border-right:.05rem solid #E0E0E0;
+  padding: 0rem 1rem;
+}
+
+img {
+  width: 1rem;
+}
+
+.img-polyline {
+  width: 1rem !important;
+}
+
+.draggable img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5))
+}
+
+.info-window-wrapper {
+  background-color: #fff;
+  z-index: -1 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+  position: absolute !important;
+  bottom: 3.5% !important;
+  left: 1%;
+}
+
+.info-window-wrapper label {
+  font-weight: 600;
+  color: #0d2235;
+  font-family: 'Poppins,sans-serif';
+  font-size: 12px !important;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.close-icon {
+  position: absolute;
+  right: 2%;
+  top: 2%;
+}
+
+.close-icon img {
+  width: 1.5rem !important;
+  cursor: pointer;
+}
+
+.div8 {
+  padding-left: 0.2rem;
+}
+
+.div9 {
+  padding-left: 0.2rem;
+}
+
+.div8 img {
+  width: 2rem;
+}
+
+.div9 img {
+  width: 2rem;
+}
+
+.ui-button {
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 0 0.5em;
+  font: 400 18px Roboto, Arial, sans-serif;
+  overflow: hidden;
+  height: 40px;
+  cursor: pointer;
+}
+
+.ui-button:hover {
+  background: rgb(235, 235, 235);
+}
+
+.polyline-type img {
+  width: 14.3rem;
+  height: 2rem;
+}
+
+.close-icon img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5))
+}
+
+.active-tool {
+  background-color: rgb(172 172 172) !important;
+}
+
+.draggable>div {
+  height: 95%;
+  border: 0.6px solid grey;
+}
+
+.button_drawingTool {
+  max-height: 30px;
+  max-height: 30px;
+  line-height: 30px !important;
+  min-width: 35px !important;
+}
+
+.hide-map {
+  display: none;
+ }

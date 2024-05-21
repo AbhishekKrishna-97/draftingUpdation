@@ -1,0 +1,94 @@
+<!-- Map div -->
+<div class="map-div" [ngClass]="{ 'hide-map': isloading || currentTabIndex > 3 }" id="dxfBoundariesMap" style="
+    height: calc(100vh - 4rem);
+    width: 100%;
+    position: absolute !important;
+    z-index: -2;
+  "></div>
+<!-- Loader -->
+<app-loder [isLoading]="isloading"></app-loder>
+<!-- Toolbar div -->
+<div class="main-div" *ngIf="!isloading && currentTabIndex <= 3">
+  <div class="parent draggable" *ngIf="currentTabIndex === 0 || currentTabIndex === 3">
+    <div class="div1" [ngClass]="{ 'active-tool': activeTool == 'hand' }">
+      <button  (click)="actionToggle($event, 'hand')" class="button_drawingTool" mat-button>
+        <img matTooltip="Hand" style="width: 1rem !important" src="../../assets/Icon/hand.svg" class="img-x" />
+      </button>
+    </div>
+    <div class="div1" [ngClass]="{ 'active-tool': activeTool == 'roof' }" *ngIf="currentTabIndex === 0">
+      <button (click)="actionToggle($event, 'roof')" class="button_drawingTool" mat-button>
+        <!-- <img matTooltip="Roof" style="width: 1rem !important;" src="../../../../assets/roof.svg" class="img-x"> -->
+        Roof
+      </button>
+    </div>
+    <div class="div4" *ngIf="currentTabIndex === 0" [ngClass]="{
+        'active-tool':
+          activeTool == 'rectangle' ||
+          activeTool == 'circle' ||
+          activeTool == 'polygon'
+      }">
+      <button class="button_drawingTool" mat-button [matMenuTriggerFor]="menu">
+        <!-- <img matTooltip="Obstacles" style="width: 1.2rem !important;" src="../../../../assets/obstacle.svg" /> -->
+        Obstacles
+      </button>
+      <mat-menu #menu="matMenu">
+        <button [ngClass]="{ 'active-tool': activeTool == 'rectangle' }"
+          (click)="actionToggle($event, 'rectangle'); closeMenu()" class="button_drawingTool" mat-menu-item>
+          <img style="margin: 5px; width: 1.2rem !important" src="../../../assets/Icon/new_logo/Rectangle.svg" />
+          <span> Rectangle</span>
+        </button>
+        <button [ngClass]="{ 'active-tool': activeTool == 'circle' }"
+          (click)="actionToggle($event, 'circle'); closeMenu()" class="button_drawingTool" mat-menu-item>
+          <i class="fa-regular fa-circle text-[16px] m-[6px]"></i>
+          <span> Circle</span>
+        </button>
+        <button [ngClass]="{ 'active-tool': activeTool == 'polygon' }"
+          (click)="actionToggle($event, 'polygon'); closeMenu()" class="button_drawingTool" mat-menu-item>
+          <img style="margin: 5px; width: 1.2rem !important" src="../../../assets/Icon/new_logo/Rectangle.svg" />
+          <span> Polygon</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="div1" *ngIf="currentTabIndex === 0" [ngClass]="{ 'active-tool': activeTool == 'module-setback-details' }">
+      <button (click)="actionToggle($event, 'module-setback-details')" class="button_drawingTool" mat-button>
+        SetBack
+      </button>
+    </div>
+
+    <div class="div1" *ngIf="currentTabIndex === 3" [ngClass]="{ 'active-tool': activeTool == 'module' }">
+      <div (click)="actionToggle($event, 'module')">
+        <!-- <img matTooltip="Module & Setback Details" style="width: 1rem !important;" src="../../../../assets/setback.png" class="img-x"> -->
+        Module
+      </div>
+    </div>
+  </div>
+  <div class="parent" *ngIf="currentTabIndex === 1">
+    <h2><span>*</span>Please mark the Boundary of House</h2>
+  </div>
+  <div class="parent" *ngIf="currentTabIndex === 2">
+    <h2><span>*</span>Please verify the Ridge of House</h2>
+  </div>
+  <button mat-button class="button_tab dxf-next-btn" (click)="changeCurrentTab()">
+    Next
+  </button>
+</div>
+
+<!-- Context menu for roof right click -->
+<div id="contextMenu" class="contextMenu">
+  <div class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100" (click)="editRoof(contextMenuPolygon,$event)">
+    Edit Roof
+  </div>
+  <div class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100" (click)="addVertexClickEvent(contextMenuPolygon)">
+    Delete Vertex
+  </div>
+  <div class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100" (click)="deleteRoof(contextMenuPolygon)">
+    Delete Roof
+  </div>
+</div>
+
+<!-- Context menu for delete vertex -->
+<div id="contextMenuVertex" class="contextMenu">
+  <div class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100" (click)="deleteVertex(clikedPolygonVertex)">
+    Delete
+  </div>
+</div>

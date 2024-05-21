@@ -1,0 +1,106 @@
+<app-loder [isLoading]="isloading"></app-loder>
+<ng-container>
+  <div class="h-[30px] w-full" style="background-color: #ffff !important;">
+    <app-actionbar [viewType]="'Site Plan'" [map]="map"></app-actionbar>
+  </div>
+
+  <!-- legend code -->
+  <div class="legend_container" *ngIf="!isloading">
+    <app-legend></app-legend>
+  </div>
+
+  <div class="animated-div" id="dxfSitePlanMap"
+    style="height:calc(100vh - 2.4rem) ;width: 100%; position: absolute !important; z-index: -2;"></div>
+
+  <!-- Roof Sides Label Text Info Window Starts -->
+  <div *ngIf="activeInfoWindow == 'label'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeOpenedInfoWindow();"><img src="../../assets/close-icon.png" alt=""></span>
+    <label for="inputLabelText" style="margin-bottom: 5px; font-size: 14px;">Change Label : </label><br><br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;"
+      type="text" id="inputLabelText" [(ngModel)]="roofLabelValue">
+    <br><br>
+    <label for="inputText">Change Font-Size : </label> <span style="font-weight:bold"
+      id="roofLabelFontSliderValue"></span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="inputRoofLabelFontSize" min="1" max="50" value="14" [(ngModel)]="roofLabelFontSize">
+    <br>
+    <label for="roofLabelColorPicker">Change Text Color : </label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="roofLabelColorPicker" value="#000000"
+      [(ngModel)]="roofLabelTextColor">
+    <br><br>
+    <div style="display: flex;
+  align-items: center;">
+      <label for="inputDegree" style="margin-bottom: 5px; font-size: 14px;">Rotate :</label>
+      <div style="margin-left:1.5rem" id="slider1"></div>
+    </div>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removeRoofLabel">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeOpenedInfoWindow();">Done</button>
+  </div>
+  <!-- Roof Sides Label Text Info Window Ends -->
+
+  <!--  Boundary Line Info Window Code Starts  -->
+  <div *ngIf="activeInfoWindow == 'roofBoundaryLine'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeOpenedInfoWindow();"><img src="../../assets/close-icon.png" alt=""></span>
+    <label>Facet Length : </label> {{roofFacetLength.feet}}'-{{roofFacetLength.inches}}"<br><br>
+    <label>Change Facet Line Color :</label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="boundaryLineColorPicker"
+      [(ngModel)]="boundaryLineColor"><br><br>
+    <label style="margin-bottom: 5px; font-size: 14px;">Change Facet Line Thickness : </label> <span
+      style="font-weight:bold" id="roofBoundaryThicknessValue">{{roofBoundaryPolylineThickness}}</span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="roofBoundaryPolylineThickness" min="1" max="20" [(ngModel)]="roofBoundaryThicknessValue">
+    <br>
+    <label>Change Facet Line Type : </label>
+    <div class="polyline-type">
+      <span style="margin-left: -5px;"><img style="cursor:pointer;" id="boundaryPolylineSolid"
+          src="../../assets/Icon/solid-line.png" alt=""></span>
+    </div>
+    <span style="font-size: 40px;cursor: pointer;" id="boundaryPolylineDashed">-----------------</span><br>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removeRoofFacetLine">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeOpenedInfoWindow();">Done</button><br>
+  </div>
+  <!--  Boundary Line Info Window Code Ends  -->
+
+  <!--  Change LineType Info Window Code Starts -->
+  <div *ngIf="activeInfoWindow == 'changeLineType'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeOpenedInfoWindow();"><img src="../../assets/close-icon.png" alt=""></span>
+    <div class="flex justify-center items-center gap-2 my-4">
+      <label>Change Line Type</label>
+      <select [(ngModel)]="selectedRoofLine.line.type" (change)="changeLineColor($event)"
+        class="rounded-full px-2 bg-gray-300 border-none">
+        <option *ngFor="let option of lineTypes" [value]="option.value">{{ option.key }}</option>
+      </select>
+    </div>
+    <button class="ml-2 bg-[#FF2400] text-white py-1.5 px-3 border-none cursor-pointer rounded-[4px] text-[14px]"
+      id="removePropertyline">Delete</button>
+    <button class="ml-2 bg-[#007fff] text-white py-1.5 px-3 border-none cursor-pointer rounded-[4px] text-[14px]"
+      (click)="closeOpenedInfoWindow();">Done</button>
+  </div>
+  <!--  Change LineType Info Window Code Ends -->
+
+  <div id="roofMenu" class="contextMenu">
+    <div (click)="hideRoof()" class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+      Hide Roof</div>
+    <div (click)="unhideRoof()" class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+      Unhide Roof</div>
+  </div>
+
+  <div id="panelMenu" class="contextMenu">
+    <div (click)="hideRoof()" class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+      Hide Roof</div>
+    <div (click)="unhideRoof()" class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+      Unhide Roof</div>
+  </div>
+
+  <app-info-window></app-info-window>

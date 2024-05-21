@@ -1,0 +1,49 @@
+<div class="container module-type">
+    <form [formGroup]="moduleDetailForm">
+        <div class="row">
+        </div>
+        <div class="row">
+            <div class="col-lg-12 heading">
+                <h3>Setback Details</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Eave Setback</mat-label>
+                        <input matInput placeholder="Eave Setback(in inches)" formControlName="eaveSetBack">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Ridge Setback</mat-label>
+                        <input matInput placeholder="Ridge Setback(in inches)" formControlName="ridgeSetBack">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Rake Setback</mat-label>
+                        <input matInput placeholder="Rake Setback(in inches)" formControlName="rakeSetBack">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Others Line Setback</mat-label>
+                        <input matInput placeholder="Others Line Setback(in inches)" formControlName="otherSetBack">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Obstacle Setback</mat-label>
+                        <input matInput placeholder="Obstacle Setback(in inches)" formControlName="obstacleSetBack">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button mat-raised-button (click)="closeDialog()">Cancel</button>
+                <button mat-raised-button [disabled]="moduleDetailForm.invalid" (click)="submitForm()" color="primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

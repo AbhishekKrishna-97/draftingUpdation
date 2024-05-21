@@ -1,0 +1,43 @@
+.resizable-arrow {
+  font-size: 2em;
+  margin-top: 9px;
+}
+
+.button {
+  background-color: #fbb814 !important;
+  border: none;
+  border-radius: 2px;
+  min-height: 26px;
+  margin-right: 10px;
+  min-width: 60px;
+  font-weight: 600;
+  float: right;
+}
+
+.animated-div {
+  transition: all 1s ease;
+}
+
+#map div[style*='crosshair'] {
+  cursor: url("https://i.stack.imgur.com/mA4e2.jpg?s=48&g=1")24 24, crosshair !important;
+}
+
+.pannelcontainer {
+  width: 100%;
+  position: absolute;
+  bottom: 0% !important;
+}
+
+.inputs-dxf {
+  left: 13px;
+  border-radius: 7px;
+  padding: 15px;
+  position: fixed;
+  bottom: 70px !important;
+  background-color: #fff;
+  display: block !important;
+}
+
+.move-rotation-wrapper {
+  bottom: 160px !important;
+}

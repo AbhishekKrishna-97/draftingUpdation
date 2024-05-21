@@ -1,0 +1,85 @@
+  <div *ngIf="showInfoWindow" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeOpenedInfoWindow();"><img src="../../assets/close-icon.png" alt=""></span>
+
+    <div *ngIf="activeInfoWindow === 'customText' || activeInfoWindow === 'roofSlope'" >
+      <div *ngIf="activeInfoWindow === 'customText'">
+        <label for="inputText">Change Text : </label><br><br>
+        <input
+          style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;"
+          type="text" id="inputText" [(ngModel)]="textNgModel">
+        <br><br>
+      </div>
+  
+      <label for="inputText">Change Font-Size : </label> <span style="font-weight:bold" id="FontSliderValue"></span> <br>
+      <input
+        style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px;"
+        type="range" id="inputFontSize" min="1" max="{{maxFontSize}}" value="14" [(ngModel)]="fontSizeNgModel">
+      <br>
+  
+      <label for="colorPicker">Change Text Color : </label><br><br>
+      <input style="width:95%; border: 1px solid #ccc;" type="color" id="colorPicker" value="#000000"
+        [(ngModel)]="fontColorNgModel">
+      <br><br>
+    </div>
+
+    <div *ngIf="activeInfoWindow === 'equipment' || activeInfoWindow === 'chimney'" >
+      <label style="margin-bottom: 5px; font-size: 14px;">Resize : </label> <span style="font-weight:bold"
+      id="sliderValue">{{resizeNgModel}}</span><br>
+    <input
+      style="width:70%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="resizeInputId" min="1" max="5" step="0.5" [(ngModel)]="resizeNgModel">
+    <br>
+    </div>
+
+    <div *ngIf="activeInfoWindow === 'tool' || activeInfoWindow === 'fence'" >
+
+      <label>Change Color :</label><br><br>
+      <input style="width:95%; border: 1px solid #ccc;" type="color" id="toolColorPicker" value="#FFA500"
+      [(ngModel)]="toolColor"><br><br>
+
+     <div *ngIf="activeTool != 'connectionWire' && activeTool != 'driveway' && activeTool != 'polyline' && activeTool != 'propertyline'">
+       <label>Fill Color :</label><br><br>
+       <input style="width:95%; border: 1px solid #ccc;" type="color" id="toolFillColorPicker" value="#FFFFFF"
+         [(ngModel)]="toolFillColorNgModel"><br><br>
+     </div> 
+
+     <div *ngIf="activeTool != 'connectionWire' && activeTool != 'driveway' && activeTool != 'polyline' && activeTool != 'propertyline'">
+       <label style="margin-bottom: 5px; font-size: 14px;">Change Opacity : </label> <span style="font-weight:bold"
+         id="toolOpacitySliderValue">{{toolOpacityNgModel}}</span> <br>
+       <input
+         style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+         type="range" id="toolOpacityInputId" min="0" max="1" step="0.1" value="0.1" [(ngModel)]="toolOpacityNgModel">
+     </div>
+
+    <label style="margin-bottom: 5px; font-size: 14px;">Change Thickness : </label> <span style="font-weight:bold"
+      id="toolThicknessSliderValue">{{toolThicknessNgModel}}</span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="toolThicknessInputId" min="1" max="20" value="2" [(ngModel)]="toolThicknessNgModel">
+    <br>
+
+    <div *ngIf="activeTool === 'connectionWire' || activeTool === 'polyline' || activeTool === 'propertyline'">
+      <label>Change Polyline Type :</label>
+      <div class="polyline-type">
+        <span style="margin-left: -5px;"><img style="cursor:pointer;" id="toolSolid"
+            src="../../assets/Icon/solid-line.png" alt=""></span>
+      </div>
+      <span style="font-size: 40px;cursor: pointer;" id="toolDashed">-------------</span><br>
+    </div>
+
+  </div>
+
+    <div *ngIf="activeInfoWindow === 'equipment' || activeInfoWindow === 'customText' || activeInfoWindow === 'chimney' || activeInfoWindow === 'roofSlope'" style="display: flex;
+        align-items: center;">
+      <label for="inputDegree" style="margin-bottom: 5px; font-size: 14px;">Rotate:</label>
+      <div style="margin-left:1.5rem" id="slider1"></div>
+    </div><br>
+
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removeElement">Delete</button>
+
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeOpenedInfoWindow();">Done</button><br><br>
+  </div>

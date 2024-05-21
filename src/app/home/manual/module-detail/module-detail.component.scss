@@ -1,0 +1,44 @@
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+    margin-left: 16px;
+  }
+  
+  .heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .row {
+    margin-bottom: 10px;
+  }
+
+  .module-type mat-radio-button {
+    margin-right: 20px;
+  }
+
+  .col-md-12 {
+    text-align: center;
+  }
+
+  button {
+    margin-right: 10px;
+  }
+  button:hover {
+    background-color: #fbb814;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  button.primary {
+    background-color: #fbb814;
+    color: #fff;
+  }
+
+  button.primary:hover {
+    background-color: #fbb814;
+  }
+  .btn-wrapper{
+    margin-top: 40px !important;
+  }

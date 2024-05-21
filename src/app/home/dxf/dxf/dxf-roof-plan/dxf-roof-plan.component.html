@@ -1,0 +1,11 @@
+<!-- legend code -->
+<div class="legend_container" *ngIf="!isloading">
+  <app-legend></app-legend>
+</div>
+<div class="animated-div mt-3" id="dxfRoofPlanMap"
+  style="height:calc(100vh - 0.4rem) ;width: 100%; position: absolute !important; z-index: -2;"></div>
+<app-loder [isLoading]="isloading"></app-loder>
+<div class="h-[30px] w-full" style="background-color: #ffff !important;">
+  <app-actionbar [map]="map" [viewType]="'Roof Plan'"></app-actionbar>
+</div>
+<app-info-window></app-info-window>

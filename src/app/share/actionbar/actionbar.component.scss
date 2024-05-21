@@ -1,0 +1,98 @@
+.button {
+  background-color: #fbb814 !important;
+  border: none;
+  border-radius: 2px;
+  min-height: 26px;
+  margin-right: 10px;
+  min-width: 60px;
+  font-weight: 600;
+  float: right;
+}
+
+.draggable {
+  background-color: #fff !important;
+  position: absolute !important;
+  cursor: grab;
+}
+
+.parent {
+  height: 29.5px;
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: 1fr;
+  align-items: start;
+  justify-content: center;
+  width: 28rem;
+  position: absolute !important;
+}
+
+.roof-parent {
+  @extend .parent;
+  grid-template-columns: repeat(5, 1fr) !important;
+  width: auto !important;
+}
+
+.roof-string-layout {
+  @extend .parent;
+  grid-template-columns: repeat(3, 1fr) !important;
+  width: auto !important;
+}
+
+.div1 {
+  display: flex;
+  flex-direction: column;
+  row-gap: .1rem;
+  justify-content: center;
+  align-items: center;
+  // border-right:.05rem solid #E0E0E0;
+  padding-right: 0.2rem;
+}
+
+img {
+  width: 1rem;
+}
+
+.draggable img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5))
+}
+
+.div8 {
+  padding-left: 0.2rem;
+}
+
+.div9 {
+  padding-left: 0.2rem;
+}
+
+.div8 img {
+  width: 2rem;
+}
+
+.div9 img {
+  width: 2rem;
+}
+
+.active-tool {
+  background-color: rgb(172 172 172) !important;
+}
+
+.draggable>div {
+  height: 95%;
+  border: 0.6px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button_drawingTool {
+  max-height: 30px;
+  max-height: 30px;
+  line-height: 30px !important;
+  min-width: 35px !important;
+  padding: 0px;
+}
+
+.button_drawingTool_equipments {
+  padding: 5px !important;
+}

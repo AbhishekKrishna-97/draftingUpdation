@@ -1,0 +1,19 @@
+<div class="card">
+    <h3>Upload DXF File</h3>
+    <div class="drop_box" (click)="fileInput.click()" id="drag_drop">
+        <header>
+            <img src="../../../assets/upload-icon.png" alt="">
+        </header>
+        <p>Drag & Drop or click to browse file to attach</p>
+        <input type="file" id="fileID" accept=".dxf" style="display:none;" #fileInput (change)="onFileSelect($event)">
+        <div class="file-name" *ngIf="selectedFileName">
+            <span>{{ selectedFileName }}</span>
+            <button class="btn-remove" (click)="removeFile()">Remove File</button>
+        </div>
+    </div>
+    <div class="button_group">
+    </div>
+    <div class="button_group">
+        <button (click)="onFileSubmit()" class="btn btn_save">Submit</button>
+    </div>
+</div>

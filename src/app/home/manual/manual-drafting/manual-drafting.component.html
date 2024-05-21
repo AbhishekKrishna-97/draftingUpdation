@@ -1,0 +1,268 @@
+<!-- <div class="container maplocation">
+  <div class="all-inputs">
+    <div class="auto-location">
+      <mat-form-field class="w-full mat-form-field-appearance-fill location-autocomplete" *ngIf="isMapLoaded">
+        <input id="input_address" matInput placeholder="Enter a location" maxlength="250" matGoogleMapsAutocomplete
+          [country]="['us', 'pr']" (onAutocompleteSelected)="onAutocompleteSelected($event)"
+          (onLocationSelected)="onLocationSelected($event)" value="{{ selectedAddress }}"
+          style="  border-radius: 0 15px 15px 0 !important;" />
+      </mat-form-field>
+    </div>
+  </div>
+
+</div> -->
+<div [ngClass]="{ 'hide-map': !isMapLoaded}" #streetView class="animated-div" id="map"
+  style="height: calc(100vh - 3rem); width: 100%; position: absolute !important; z-index: -1;"></div>
+
+<!-- <div class="map-loading" *ngIf="!isMapLoaded">
+    <h2>Loading Map...</h2>
+</div> -->
+
+<app-loder [isLoading]="!isMapLoaded"></app-loder>
+
+<div class="info-window-wrapper" *ngIf="showRoofLinesForm">
+  <div class="container">
+    <form [formGroup]="roofLineForm">
+      <div class="row" formArrayName="roofLines" *ngFor="let college of getRoofLines.controls; let i = index;">
+        <div class="col-md-6" [formGroupName]="i">
+          <mat-form-field>
+            <mat-label>Line{{ i + 1}} Type</mat-label>
+            <mat-select formControlName="lineType" (focus)="highLightRoofLine(i)">
+              <mat-option *ngFor="let lineType of lineTypes" [value]="lineType.key">{{ lineType.value }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="btn_wrapper" class="col-md-12">
+          <button mat-button color="primary" class="btn btn-primary" (click)="submitRoofLineForm()"
+            [disabled]="roofLineForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-container *ngIf="isMapLoaded && currentTabIndex === 0">
+  <div class="action-bar h-[30px] w-full" style="background-color: #ffff !important;">
+    <app-actionbar (actionTypeChange)="actionchange($event)" (equipmentChange)="fetchAction($event)"></app-actionbar>
+  </div>
+</ng-container>
+<button *ngIf="isMapLoaded && currentTabIndex === 0" type="success" class="btn btn-success" (click)="addMaxModules()">Add Max Modules</button>
+<ng-container *ngIf="showInfowindow">
+  <!-- Tree Info Window -->
+  <div *ngIf="showObjectInfoWindow === 'tree'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeInfoWindow()"><img src="../../assets/close-icon.png" alt=""></span>
+    <label for="inputText" style="margin-bottom: 5px; font-size: 14px;">Resize Image : </label> <span
+      style="font-weight:bold" id="sliderValue">{{treeImgValue}}</span> <br>
+    <input
+      style="width:70%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="inputImgSize" min="1" max="200" [(ngModel)]="treeImgValue">
+    <br />
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removeObject">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeInfoWindow()">Done</button>
+  </div>
+  <!-- Property Line Info Window -->
+  <div *ngIf="showObjectInfoWindow === 'propertyLine'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeInfoWindow()"><img src="../../assets/close-icon.png" alt=""></span>
+    <label>Change Propertyline Color :</label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="propertyLineColorPicker" value="#FFA500"
+      [(ngModel)]="propertyLineEditObject.propertyLineColor"><br><br>
+    <label style="margin-bottom: 5px; font-size: 14px;">Change Propertyline Thickness : </label> <span
+      style="font-weight:bold"
+      id="propertyLineThicknessSliderValue">{{propertyLineEditObject.propertyLineThicknessNgModel}}</span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="propertyLineThicknessInputId" min="1" max="20" value="2"
+      [(ngModel)]="propertyLineEditObject.propertyLineThicknessNgModel">
+    <br>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removePropertyline">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeInfoWindow()">Done</button>
+  </div>
+  <!-- Drive Way Info Window -->
+  <div *ngIf="showObjectInfoWindow === 'driveWay'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeInfoWindow()"><img src="../../assets/close-icon.png" alt=""></span>
+    <label>Change Polygon Color :</label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="polygonColorPicker" value="#FFA500"
+      [(ngModel)]="driveWayObject.polygonColor"><br><br>
+    <label>Fill Color :</label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="polygonFillColorPicker" value="#FFFFFF"
+      [(ngModel)]="driveWayObject.polygonFillColor"><br><br>
+    <label style="margin-bottom: 5px; font-size: 14px;">Change Opacity : </label> <span style="font-weight:bold"
+      id="polygonOpacitySliderValue">{{driveWayObject.polygonOpacityNgModel}}</span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="polygonOpacityInputId" min="0" max="1" step="0.1" value="0.1"
+      [(ngModel)]="driveWayObject.polygonOpacityNgModel">
+    <label style="margin-bottom: 5px; font-size: 14px;">Change Polygon Thickness : </label> <span
+      style="font-weight:bold" id="polygonThicknessSliderValue">{{driveWayObject.polygonThicknessNgModel}}</span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="polygonThicknessInputId" min="1" max="20" value="2"
+      [(ngModel)]="driveWayObject.polygonThicknessNgModel">
+    <br>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removePolygon">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeInfoWindow()">Done</button><br>
+  </div>
+  <!-- Equipment Info Window -->
+  <div *ngIf="showObjectInfoWindow === 'equipment'" class="info-window-wrapper">
+    <label style="margin-bottom: 5px; font-size: 14px;">Resize : </label> <span style="font-weight:bold"
+      id="sliderValue">{{equipmentImgNgModel}}</span> <br>
+    <input
+      style="width:70%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="inputEquipmentImgSize" min="1" max="5" [(ngModel)]="equipmentImgNgModel">
+    <br>
+    <!-- <label style="margin-bottom: 5px; font-size: 14px;">Rotate : </label> <span style="font-weight:bold" id="sliderValue">{{equipmentImgNgModel}}</span><br> -->
+    <!-- <input style="width:70%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px" type="range" id="rotationSlider" step="10" min="0" max="360" value="0"> -->
+    <div style="display: flex;
+        align-items: center;">
+      <label for="inputDegree" style="margin-bottom: 5px; font-size: 14px;">Rotate:</label>
+      <div style="margin-left:1.5rem" id="slider1"></div>
+    </div><br>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removeEquipment">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeInfoWindow()">Done</button><br><br>
+  </div>
+  <!-- Custom Text div -->
+  <div *ngIf="showObjectInfoWindow === 'text'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeInfoWindow()"><img src="../../assets/close-icon.png" alt=""></span>
+    <label for="inputText">Change Text : </label><br><br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;"
+      type="text" id="inputText" [(ngModel)]="customTextObject.customTextValue">
+    <br><br>
+    <label for="inputText">Change Font-Size : </label> <span style="font-weight:bold" id="FontSliderValue"></span> <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px;"
+      type="range" id="inputFontSize" min="1" max="50" value="14" [(ngModel)]="customTextObject.customTextFont">
+    <br>
+    <label for="colorPicker">Change Text Color : </label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="colorPicker" value="#000000"
+      [(ngModel)]="customTextObject.customTextColor">
+    <br><br>
+    <div style="display: flex;
+        align-items: center;">
+      <label for="inputDegree">Rotate Text : </label>
+      <div style="margin-left:1.5rem" id="slider1"></div>
+    </div>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removeCustomText">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeInfoWindow()">Done</button>
+  </div>
+  <!-- Add line type for roof lines -->
+  <div *ngIf="showObjectInfoWindow === 'lineType'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeInfoWindow()"><img src="../../assets/close-icon.png" alt=""></span>
+    <label for="inputText">Add Line Type : </label>
+    <form [formGroup]="lineTypeForm">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>Line Type</mat-label>
+          <mat-select formControlName="lineType">
+            <mat-option *ngFor="let lineType of lineTypes" [value]="lineType.key">{{ lineType.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <div class="btn_wrapper" class="col-md-12">
+          <button mat-button color="primary" class="btn btn-primary" (click)="submitLineTypeForm()"
+            [disabled]="lineTypeForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- Change Polyline type -->
+  <div *ngIf="showObjectInfoWindow === 'polyline'" class="info-window-wrapper">
+    <span class="close-icon" (click)="closeInfoWindow()"><img src="../../assets/close-icon.png" alt=""></span>
+    <label>Polyline Length : </label>
+    {{polyLineObject.polylineLength.feet}}'-{{polyLineObject.polylineLength.inches}}"<br><br>
+    <label>Change Polyline Color : </label><br><br>
+    <input style="width:95%; border: 1px solid #ccc;" type="color" id="polylineColorPicker" value="#FF0000"
+      [(ngModel)]="polyLineObject.polylineColor"><br><br>
+    <label for="polylineThickness" style="margin-bottom: 5px; font-size: 14px;">Change Polyline Thickness : </label>
+    <span style="font-weight:bold" id="polylineThicknessSliderValue"> {{polyLineObject.polylineThicknessValue}}</span>
+    <br>
+    <input
+      style="width:95%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid black; border-radius: 4px; font-size: 14px;padding-right: 0px"
+      type="range" id="polylineThickness" min="1" max="20" [(ngModel)]="polyLineObject.polylineThicknessValue">
+    <br>
+    <label>Change Polyline Type :</label>
+    <div class="polyline-type">
+      <span style="margin-left: -5px;"><img style="cursor:pointer;" id="polylineSolid"
+          src="../../assets/Icon/solid-line.png" alt=""></span>
+    </div>
+    <span style="font-size: 40px;cursor: pointer;" id="polylineDashed">-------------</span><br>
+    <button
+      style="margin-left:4px;background-color: #FF2400; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      id="removePolyline">Delete</button>
+    <button
+      style="margin-left:8px;background-color: #007fff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+      (click)="closeInfoWindow()">Done</button><br>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isMapLoaded && currentTabIndex === 2">
+  <div class="pannelcontainer">
+    <mat-accordion class="dataentmatexpainsionpannel">
+      <!-- ... (existing code) -->
+      <mat-expansion-panel [expanded]="true" (opened)="isPanel = true;" (closed)="isPanel = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            String Layout
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="flex justify-center items-center h-[72px]">
+          <div *ngFor="let string of stringPannelData; let index=index" class="flex h-[45px]">
+            <div class="cursor-pointer  px-4 pt-[10px] rounded-full" [ngStyle]="{
+              'padding-top': (index === currentIndex - 1) ? '10px !important' : '12px !important',
+              'background-color': (index === currentIndex - 1) ? 'white' : string.color,
+              'color': (index === currentIndex - 1) ? string.color : '',
+              'border': (index === currentIndex - 1) ? '2px solid ' + string.color : ''
+           }" (click)="selectCurrentColor(index)">
+              <div class="flex m-auto font-bold">
+                <span>String</span> &nbsp;&nbsp;
+                <span>{{string.stringValue}}</span><span>({{string.totalString}})</span>
+              </div>
+            </div>
+            <p class="resizable-arrow translate-y-[4px]">&#x2192;</p>
+          </div>
+          <div class="cursor-pointer">
+            <button class="fa-solid fa-plus border-none rounded-md w-8 h-8 -mt-[8px]" (click)="addStringLayout()"
+              [class.disabled]="isEndOfArray()">
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isMapLoaded && currentTabIndex === 2">
+  <div [ngClass]="{'move-rotation-wrapper' : isPanel}" class="inputs-dxf bottom-right"
+    style="display: block !important; bottom: 105px;">
+    <div class="rotate-scale-inputs">
+      <label>Rotate</label>
+      <div style="position: relative; bottom: 20px;">
+        <i (click)="rotateMap(1)" class="fa-solid fa-rotate-left" style="margin-left: 70px;cursor: pointer;"></i>
+        <i (click)="rotateMap(-1)" class="fa-solid fa-rotate-right" style="margin-left: 15px;cursor: pointer;"></i>
+      </div>
+    </div>
+  </div>
+</ng-container>

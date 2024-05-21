@@ -1,0 +1,7 @@
+.animated-div {
+    transition: all 1s ease;
+  }
+  
+  #map div[style*='crosshair'] {
+    cursor: url("https://i.stack.imgur.com/mA4e2.jpg?s=48&g=1")24 24, crosshair !important;
+  }

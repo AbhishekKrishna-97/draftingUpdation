@@ -1,0 +1,13 @@
+<div class="animated-div" id="map"
+  style="height:calc(100vh - 4rem) ;width: 100%; position: absolute !important; z-index: -2;"></div>
+<app-loder [isLoading]="isloading"></app-loder>
+<div id="inverterMenu" class="contextMenu">
+  <div (click)="deleteInverter()" class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+    Delete Inverter</div>
+  <div (click)="addInverter()" class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100">
+    Add Inverter</div>
+</div>
+<div class="h-[30px] absolute top-0 w-[40%]">
+  <app-actionbar [map]="map" [viewType]="'Roof Plan'"></app-actionbar>
+</div>
+<app-info-window></app-info-window>

@@ -1,0 +1,35 @@
+<div class="container-fluid fluid-padding pb-[10px]" >
+    <div class="h-[40px] grid grid-cols-12">
+      <div class="col-span-7">
+        <div class="d-flex flex-row mt-2 justify-end" style="overflow-x: auto;">
+          <ng-container *ngFor="let tab of tablist; let i = index">
+            <div
+              [ngClass]="selectedtabindex == i? 'p-1 pt-1.5 pr-3 pb-0 pl-3 bg-black text-white  cursor-pointer  border-solid border-[0.5px] border-stone-400  h-[35px]' :
+              'cursor-pointer p-1 pt-1.5 pr-3 pb-0 pl-3 border-solid border-[0.5px] border-stone-400  h-[35px]'"
+              >
+              <div class="col-span-12 mx-2 my-1 text-xs">
+                <p style="white-space:nowrap">{{tab.name}}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-span-5" style="z-index: 100;">
+        <button mat-button [disabled]="disableBtn" (click)="onTabChange('next')" *ngIf="selectedtabindex < 2" class="button_tab">Next</button>
+        <button mat-button [disabled]="disableBtn" (click)="submitJSON()" *ngIf="selectedtabindex === 2" class="button_tab">Submit</button>
+        <button mat-button [disabled]="disableBtn" (click)="onTabChange('prev')" *ngIf="selectedtabindex > 0" class="button_tab">Prev</button>
+      </div>
+    </div>
+    <ng-container *ngIf="selectedtabindex === 0 && !isloading">
+      <app-manual-site></app-manual-site>
+    </ng-container>
+    <ng-container *ngIf="selectedtabindex === 1 && !isloading">
+      <app-manual-roof></app-manual-roof>
+    </ng-container>
+    <ng-container *ngIf="selectedtabindex === 2 && !isloading">
+      <app-manual-string></app-manual-string>
+    </ng-container>
+  </div>
+  
+  <!-- Loader -->
+<app-loder [isLoading]="isloading"></app-loder>

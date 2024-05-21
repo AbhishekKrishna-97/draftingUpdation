@@ -1,0 +1,45 @@
+<app-loder [isLoading]="isloading"></app-loder>
+<div>
+  <div class="animated-div" id="dxfStringLayoutMap" [ngStyle]="{ 'height': isPanel ? 'calc(100vh - 8.5rem)' : 'calc(100vh - 3.1rem)'}"
+  style="width: 100%; position: absolute !important; z-index: -2;"></div>
+  <div class="pannelcontainer">
+    <mat-accordion class="dataentmatexpainsionpannel">
+      <mat-expansion-panel [expanded]="true" (opened)="isPanel = true; StringLayoutAccordian.emit(true);" (closed)="isPanel = false; StringLayoutAccordian.emit(false); ">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            String Layout
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="flex justify-center items-center h-[72px]">
+          <div *ngFor="let string of stringPannelData; let index=index" class="flex h-[45px]">
+            <div class="cursor-pointer font-bold px-4 pt-[10px] rounded-full" [ngStyle]="{
+              'padding-top': (index === currentIndex - 1) ? '10px !important' : '12px !important',
+              'background-color': (index === currentIndex - 1) ? string.color : string.color,
+              'opacity':(index === currentIndex - 1) ? '1' :'0.5',
+              'border': (index === currentIndex - 1) ? '2px solid ' + 'black' : ''
+           }"
+           (click)="selectCurrentColor(index)">
+              <div class="flex m-auto font-bold">
+                <span>String</span> &nbsp;&nbsp;
+                <span>{{string.stringValue}}</span><span>({{string.totalString}})</span>
+              </div>
+            </div>
+            <p class="resizable-arrow translate-y-[4px]">&#x2192;</p>
+          </div>
+          <div class="cursor-pointer">
+            <button class="fa-solid fa-plus border-none rounded-md w-8 h-8 -mt-[8px]" (click)="addStringLayout()"
+              [class.disabled]="isEndOfArray()">
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+<div [ngClass]="{'move-rotation-wrapper' : isPanel}" class="inputs-dxf bottom-right" style="display: block !important; bottom: 105px;">
+  <app-map-compass [map]="map"></app-map-compass>
+</div>
+<div class="h-[30px] w-full" style="background-color: #ffff !important;">
+  <app-actionbar [viewType]="'String Layout'" [map]="map"></app-actionbar>
+</div>
+<app-info-window></app-info-window>
